@@ -6,7 +6,7 @@ long_description = (this_directory / "README.md").read_text()
 
 setup(
     name="bad-phylo",
-    version="0.0.1",
+    version="0.0.2",
     packages=find_packages(),
     entry_points={
         'console_scripts': ['bad = app.__main__:main']
