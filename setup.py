@@ -1,7 +1,11 @@
 from setuptools import setup, find_packages
+from pathlib import Path
+
+this_directory = Path(__file__).parent
+long_description = (this_directory / "README.md").read_text()
 
 setup(
-    name="bad",
+    name="bad-phylo",
     version="0.0.1",
     packages=find_packages(),
     entry_points={
@@ -10,7 +14,8 @@ setup(
     author='Julius Wiegert',
     author_email='julius-wiegert@web.de',
     description='Tool for the estimation of the difficulty of phylogenetic placements',
-    long_description='BAD provides a way to estimate the difficulty of phylogenetic placements. It can help to understand why specific placements are easy or difficult due to the usage of Shapley values.',
+    long_description=long_description,
+    long_description_content_type='text/markdown',
     include_package_data=True,
     install_requires=[
         "pandas",
@@ -22,7 +27,8 @@ setup(
         "lightgbm",
         "shap",
         "rich-argparse",
-        "pyprobables"
+        "pyprobables",
+        "matplotlib"
 
     ],
     package_data={

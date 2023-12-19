@@ -1,4 +1,8 @@
 # BAD: Bold Assertor of Difficulty
+[![image](https://img.shields.io/pypi/v/bad-phylo.svg)](https://pypi.python.org/pypi/bad-phylo)
+[![image](https://img.shields.io/conda/vn/conda-forge/bad-phylo.svg)](https://anaconda.org/conda-forge/bad-phylo)
+[![image](https://img.shields.io/badge/License-GPL3-yellow.svg)](https://opensource.org/licenses/GPL-3-0)
+
 ## Description
 
 BAD is a python tool for predicting the difficulty of phylogenetic placements. BAD uses RAxML-NG outputs as input. It requires a RAxML-NG installation.
