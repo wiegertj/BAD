@@ -75,7 +75,7 @@ class FeatureComputer:
             self.raxml_path = raxml_ng_path
             if not os.path.isfile(self.raxml_path):
                 self.logger.error(
-                    f"RAxML-NG not found in the provided path {raxml_ng_path}. Please make sure it exists and provide the absolute path. Exiting EBG.")
+                    f"RAxML-NG not found in the provided path {raxml_ng_path}. Please make sure it exists and provide the absolute path. Exiting BAD.")
                 sys.exit()
 
     def compute_parsimony_bootstrap_features(self) -> float:
@@ -183,7 +183,7 @@ class FeatureComputer:
             "--redo",
             "--prefix", output_prefix,
             "--threads", "auto{60}",
-            "--log", "ERROR",
+            #"--log", "ERROR",
         ]
 
         subprocess.run(raxml_command, shell=False)
@@ -196,6 +196,7 @@ class FeatureComputer:
                          "--prefix", output_prefix,
                          "--threads", "auto{60}"
                          ]
+        print(" ".join(raxml_command))
         result = subprocess.run(" ".join(raxml_command), stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True,
                                 shell=True)
         numbers = re.findall(r'set:\s+(-?[\d.]+)', result.stdout)
@@ -422,7 +423,7 @@ class FeatureComputer:
     def compute_kmer_similarity_features(self) -> pd.DataFrame:
         kmer_computer = KmerComputer(self.msa_filepath, self.tree_filepath, self.model_filepath, self.query_filepath,
                                      self.isAA)
-        kmer_similarities_df = kmer_computer.compute_kmer_similarity()
+        kmer_similarities_df = kmer_computer.compute_kmer_similarity(self.logger)
         self.logger.info("Finished computing k-mer similarity features!")
         return kmer_similarities_df
 

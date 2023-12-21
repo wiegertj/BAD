@@ -28,7 +28,7 @@ class Predictor:
         current_directory : os.path
             current working directory
         output_prefix : str
-             name of the ouput EBG produces
+             name of the ouput BAD produces
         prediction_model : LightGBM.Booster
             model predicting the median of the bootstrap
         prediction : pd.DataFrame
@@ -182,4 +182,8 @@ class Predictor:
    # "/Users/juliuswiegert/Downloads/test_0_msa_model.txt",
     #"/Users/juliuswiegert/Downloads/test_0_nonsense.fasta",
     #"test__", "raxml-ng", True, True)
+#pred.predict()
+
+
+#pred = Predictor("/Users/juliuswiegert/Downloads/tara_reference.fasta", "/Users/juliuswiegert/Downloads/tara.newick", "/Users/juliuswiegert/Downloads/tara_model.txt", "/Users/juliuswiegert/Downloads/tara_query_1.fasta", "TARA_TEST", "raxml-ng", True, True)
 #pred.predict()

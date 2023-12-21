@@ -150,10 +150,14 @@ class KmerComputer:
             bloom_filters_MSA.append((record.id, bf))
         return bloom_filters_MSA
 
-    def compute_kmer_similarity(self) -> pd.DataFrame:
+    def compute_kmer_similarity(self, logger) -> pd.DataFrame:
         results = []
+        counter = 0
         for query_record in SeqIO.parse(self.query_filepath, 'fasta'):
+            counter += 1
             results.append(self.compute_string_similarity_statistics(query_record))
+            if counter != 0 and counter % 20 == 0:
+                logger.info(f"Finished computing k-mer features for {counter} queries ... ")
 
         return pd.DataFrame(results, columns=["queryId", "mean_15mer_similarity", "std_15mer_similarity",
                                               "skewness_15mer_similarity", "kurtosis_15mer_similarity"])

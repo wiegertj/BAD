@@ -78,6 +78,9 @@ class FeatureExtractor:
 
         df_merged["kurtosis_25mer_similarity_perc_hash"].fillna(-1, inplace=True)
 
+        df_merged = df_merged[["queryId", "mean_15mer_similarity",
+                               "std_15mer_similarity",	"skewness_15mer_similarity",	"kurtosis_15mer_similarity",	"inv_site_matches_query_msa_t9",	"transversion_frac_query_msa_t7",	"inv_site_std_frac_query_msa_t7",	"transversion_frac_query_msa_t5",	"min_frac_query_msa_t5",	"std_branch_length",	"skewness_closeness_centrality",	"kurtosis_25mer_similarity_perc_hash",	"max_parsimony_subst_freq",	"mean_nrf_parsimony_trees",	"no_topologies_parsimony_bootstrap"]]
+
         self.logger.info("Feature extraction finished!")
         elapsed_time = time.time() - start_time
         self.logger.info(f"Elapsed time: {round(elapsed_time, 2)} seconds")
