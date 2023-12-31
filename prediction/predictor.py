@@ -186,4 +186,10 @@ class Predictor:
 
 
 pred = Predictor("/hits/fast/cme/wiegerjs/bad_test/TARA_OLD_NOFIL/tara_reference.fasta", "/hits/fast/cme/wiegerjs/bad_test/TARA_OLD_NOFIL/tara.newick", "/hits/fast/cme/wiegerjs/bad_test/TARA_OLD_NOFIL/tara_model.txt", "/hits/fast/cme/wiegerjs/bad_test/TARA_OLD_NOFIL/tara_query_1.fasta", "TARA_TEST", "raxml-ng", True, True)
-#pred.predict()
+pred.predict()
+
+pred = Predictor("/hits/fast/cme/wiegerjs/bad_test/TARA_OLD_NOFIL/neotrop_reference.fasta", "/hits/fast/cme/wiegerjs/bad_test/TARA_OLD_NOFIL/neotrop.newick", "/hits/fast/cme/wiegerjs/bad_test/TARA_OLD_NOFIL/neotrop_model.txt", "/hits/fast/cme/wiegerjs/bad_test/TARA_OLD_NOFIL/neo_query_1.fasta", "NEO_TEST", "raxml-ng", True, True)
+pred.predict()
+
+pred = Predictor("/hits/fast/cme/wiegerjs/bad_test/TARA_OLD_NOFIL/bv_reference.fasta", "/hits/fast/cme/wiegerjs/bad_test/TARA_OLD_NOFIL/bv.newick", "/hits/fast/cme/wiegerjs/bad_test/TARA_OLD_NOFIL/bv_model.txt", "/hits/fast/cme/wiegerjs/bad_test/TARA_OLD_NOFIL/bv_query_1.fasta", "BV_TEST", "raxml-ng", True, True)
+pred.predict()
