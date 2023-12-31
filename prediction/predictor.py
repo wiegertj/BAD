@@ -185,5 +185,5 @@ class Predictor:
 #pred.predict()
 
 
-#pred = Predictor("/Users/juliuswiegert/Downloads/tara_reference.fasta", "/Users/juliuswiegert/Downloads/tara.newick", "/Users/juliuswiegert/Downloads/tara_model.txt", "/Users/juliuswiegert/Downloads/tara_query_1.fasta", "TARA_TEST", "raxml-ng", True, True)
+pred = Predictor("/hits/fast/cme/wiegerjs/bad_test/TARA_OLD_NOFIL/tara_reference.fasta", "/hits/fast/cme/wiegerjs/bad_test/TARA_OLD_NOFIL/tara.newick", "/hits/fast/cme/wiegerjs/bad_test/TARA_OLD_NOFIL/tara_model.txt", "/hits/fast/cme/wiegerjs/bad_test/TARA_OLD_NOFIL/tara_query_1.fasta", "TARA_TEST", "raxml-ng", True, True)
 #pred.predict()
