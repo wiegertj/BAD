@@ -2,7 +2,7 @@ import time
 import os
 import pandas as pd
 from features.feature_computer import FeatureComputer
-from utils.utils import setup_logger, check_file_exists
+from utils.utils import setup_logger
 
 
 class FeatureExtractor:
@@ -29,15 +29,12 @@ class FeatureExtractor:
            extract_features(self):
                triggers feature computation in the right order, merges result and tracks execution time
            """
-    def __init__(self, msa_file_path, tree_file_path, model_file_path, query_file, output_prefix, raxml_ng_path, redo, log_file_path):
+    def __init__(self, msa_file_path, tree_file_path, model_file_path, query_file, output_prefix, raxml_ng_path, redo, log_file_path, threads):
+        self.logger = setup_logger("FeatureExtractor", log_file_path)
         self.msa_file_path = msa_file_path
         self.tree_file_path = tree_file_path
         self.model_file_path = model_file_path
-        self.feature_computer = FeatureComputer(msa_file_path, tree_file_path, model_file_path, query_file, output_prefix, raxml_ng_path, log_file_path)
-        self.logger = setup_logger("FeatureExtractor", log_file_path)
-        check_file_exists(msa_file_path, "Fasta MSA file", self.logger)
-        check_file_exists(tree_file_path, "Newick tree file", self.logger)
-        check_file_exists(model_file_path, "RAxML-NG model file", self.logger)
+        self.feature_computer = FeatureComputer(msa_file_path, tree_file_path, model_file_path, query_file, output_prefix, raxml_ng_path, log_file_path, threads)
         self.current_directory = os.path.abspath(os.curdir)
 
     def extract_features(self) -> pd.DataFrame:

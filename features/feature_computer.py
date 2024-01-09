@@ -53,8 +53,9 @@ class FeatureComputer:
 
            """
 
-    def __init__(self, msa_filepath, tree_filepath, model_filepath, query_filepath, output_prefix, raxml_ng_path, log_path):
+    def __init__(self, msa_filepath, tree_filepath, model_filepath, query_filepath, output_prefix, raxml_ng_path, log_path, threads):
         self.msa_filepath = msa_filepath
+        self.threads = threads
         self.tree_filepath = tree_filepath
         self.model_filepath = model_filepath
         self.query_filepath = query_filepath
@@ -126,7 +127,7 @@ class FeatureComputer:
                 "--msa", new_msa_path,
                 "--redo",
                 "--prefix", output_prefix,
-                "--threads", "auto{60}",
+                "--threads", f"{self.threads}",
                 "--log", "ERROR"
             ]
             try:
@@ -182,8 +183,8 @@ class FeatureComputer:
             "--msa", self.msa_filepath,
             "--redo",
             "--prefix", output_prefix,
-            "--threads", "auto{60}",
-            #"--log", "ERROR",
+            "--threads", f"{self.threads}",
+            "--log", "ERROR",
         ]
 
         subprocess.run(raxml_command, shell=False)
@@ -194,9 +195,8 @@ class FeatureComputer:
                          "--tree", os.path.abspath(trees_path),
                          "--redo",
                          "--prefix", output_prefix,
-                         "--threads", "auto{60}"
+                         "--threads", f"{self.threads}"
                          ]
-        print(" ".join(raxml_command))
         result = subprocess.run(" ".join(raxml_command), stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True,
                                 shell=True)
         numbers = re.findall(r'set:\s+(-?[\d.]+)', result.stdout)
