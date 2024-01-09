@@ -22,7 +22,7 @@ class FeatureExtractorTest(unittest.TestCase):
         self.feature_computer = FeatureExtractor(test_msa_path,
                                                  test_tree_path,
                                                  test_model_path, test_query_path,
-                                                 "test", "raxml-ng", True, os.path.join(os.curdir, "bad.log"))
+                                                 "test", "raxml-ng", True, os.path.join(os.curdir, "bad.log"), threads='auto')
         self.features = self.feature_computer.extract_features()
         self.features_ground_truth = pd.read_csv(os.path.abspath(os.path.dirname(__file__) + "/data/comparison/ground_truth.csv"))
 
