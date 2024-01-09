@@ -19,13 +19,14 @@ def main():
                         help=f"{'':<15}{'if set, all existing results will be overwritten':^50}")
     parser.add_argument("-shap", action='store_false', required=False,
                         help=f"{'':<15}{'if set, Shapley explanations of the prediction will be calculated':^50}")
+    parser.add_argument("-threads", required=False, type=str, default='auto', help=f"{'NUMBER |':<15}{'number of threads to be used by RAxML-NG':^50}{'| default: auto':>20}")
 
     args = parser.parse_args()
     if args.o is None:
         output = "BAD_output"
     else:
         output = args.o
-    predictor = Predictor(args.msa, args.tree, args.model, args.query, output, args.raxmlng, args.redo, args.shap)
+    predictor = Predictor(args.msa, args.tree, args.model, args.query, output, args.raxmlng, args.redo, args.shap, args.threads)
     predictor.predict()
 
 
