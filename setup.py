@@ -24,7 +24,7 @@ setup(
         "biopython",
         "networkx",
         "scipy",
-        "lightgbm",
+        "lightgbm==4.1.0",
         "shap",
         "rich-argparse",
         "pyprobables",
