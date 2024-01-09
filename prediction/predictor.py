@@ -6,7 +6,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from features.feature_extractor import FeatureExtractor
 from models.get_model import get_model
-from utils.utils import setup_logger, workdir_is_clean
+from utils.utils import setup_logger, workdir_is_clean, check_file_exists
 
 
 class Predictor:
@@ -37,7 +37,11 @@ class Predictor:
     """
 
     def __init__(self, msa_filepath, tree_filepath, model_filepath, query_filepath, o="BAD_output",
-                 raxml_ng_path="raxml-ng", redo=False, shapley_calc=True):
+                 raxml_ng_path="raxml-ng", redo=False, shapley_calc=True, threads='auto'):
+        self.logger = setup_logger("Predictor", os.path.join(os.pardir, "bad.log"))
+        check_file_exists(msa_filepath, "Fasta MSA file", self.logger)
+        check_file_exists(tree_filepath, "Newick tree file", self.logger)
+        check_file_exists(model_filepath, "RAxML-NG model file", self.logger)
         self.current_directory = os.path.abspath(os.curdir)
         self.tree_filepath = tree_filepath
         self.prediction_model = get_model("bad")
@@ -48,16 +52,15 @@ class Predictor:
 
         tmp_folder_path = os.path.abspath(os.path.join(os.curdir, self.output_prefix))
         if not (workdir_is_clean(tmp_folder_path, self.redo, o)):
-            self.logger = setup_logger("Predictor", os.path.join(os.curdir, "bad.log"))
             self.logger.error(
-                f"Found exisiting result folder: {tmp_folder_path}, please rename the folder or run in -redo mode. Exiting EBG.")
+                f"Found exisiting result folder: {tmp_folder_path}, please rename the folder or run in -redo mode. Exiting BAD.")
             sys.exit()
 
         self.logger = setup_logger("Predictor", os.path.join(tmp_folder_path, "bad.log"))
         self.feature_extractor = FeatureExtractor(msa_filepath,
                                                   tree_filepath,
                                                   model_filepath, query_filepath,
-                                                  o, raxml_ng_path, redo, os.path.join(tmp_folder_path, "bad.log"))
+                                                  o, raxml_ng_path, redo, os.path.join(tmp_folder_path, "bad.log"), threads)
 
 
     def print_result(self) -> None:
@@ -172,24 +175,3 @@ class Predictor:
         results = features[["queryId", "placement_difficulty_prediction"]]
         results.to_csv(os.path.abspath(os.path.join(os.pardir, f"{self.output_prefix}_result.csv")))
         self.print_result()
-
-
-
-
-#pred = Predictor(
- #   "/Users/juliuswiegert/Downloads/test_0_reference.fasta",
-  #  "/Users/juliuswiegert/Downloads/test_0_taxon42.newick",
-   # "/Users/juliuswiegert/Downloads/test_0_msa_model.txt",
-    #"/Users/juliuswiegert/Downloads/test_0_nonsense.fasta",
-    #"test__", "raxml-ng", True, True)
-#pred.predict()
-
-
-pred = Predictor("/hits/fast/cme/wiegerjs/bad_test/TARA_OLD_NOFIL/tara_reference.fasta", "/hits/fast/cme/wiegerjs/bad_test/TARA_OLD_NOFIL/tara.newick", "/hits/fast/cme/wiegerjs/bad_test/TARA_OLD_NOFIL/tara_model.txt", "/hits/fast/cme/wiegerjs/bad_test/TARA_OLD_NOFIL/tara_query_1.fasta", "TARA_TEST", "raxml-ng", True, True)
-pred.predict()
-
-pred = Predictor("/hits/fast/cme/wiegerjs/bad_test/TARA_OLD_NOFIL/neotrop_reference.fasta", "/hits/fast/cme/wiegerjs/bad_test/TARA_OLD_NOFIL/neotrop.newick", "/hits/fast/cme/wiegerjs/bad_test/TARA_OLD_NOFIL/neotrop_model.txt", "/hits/fast/cme/wiegerjs/bad_test/TARA_OLD_NOFIL/neo_query_1.fasta", "NEO_TEST", "raxml-ng", True, True)
-pred.predict()
-
-pred = Predictor("/hits/fast/cme/wiegerjs/bad_test/TARA_OLD_NOFIL/bv_reference.fasta", "/hits/fast/cme/wiegerjs/bad_test/TARA_OLD_NOFIL/bv.newick", "/hits/fast/cme/wiegerjs/bad_test/TARA_OLD_NOFIL/bv_model.txt", "/hits/fast/cme/wiegerjs/bad_test/TARA_OLD_NOFIL/bv_query_1.fasta", "BV_TEST", "raxml-ng", True, True)
-pred.predict()
